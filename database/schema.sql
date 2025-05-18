@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS spreadsheet_app;
+USE spreadsheet_app;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  is_admin BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS cells (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  `row` INT NOT NULL,
+  `column` INT NOT NULL,
+  value TEXT,
+  last_modified_by INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (last_modified_by) REFERENCES users(id),
+  UNIQUE KEY cell_position (`row`, `column`)
+);
+
+CREATE INDEX idx_cell_row_column ON cells(`row`, `column`);
+CREATE INDEX idx_cell_last_modified ON cells(last_modified_by);

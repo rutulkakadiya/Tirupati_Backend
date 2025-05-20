@@ -10,6 +10,21 @@ const cellRoutes = require('./routes/cellRoutes');
 const app = express();
 const PORT = process.env.PORT || 1008;
 
+import fetch from 'node-fetch';
+
+async function getPublicIP() {
+  try {
+    const res = await fetch("https://api.ipify.org?format=json");
+    const data = await res.json();
+    console.log("Render Public IP:", data.ip);
+  } catch (err) {
+    console.error("Failed to get public IP:", err.message);
+  }
+}
+
+getPublicIP();
+
+
 app.use(cors("https://tirupatipipes.easywayitsolutions.com"));
 app.use(bodyParser.json());
 app.use(express.urlencoded());

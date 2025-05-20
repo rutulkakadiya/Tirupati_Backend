@@ -1,4 +1,5 @@
 const express = require('express');
+const https = require('https');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
@@ -10,16 +11,21 @@ const cellRoutes = require('./routes/cellRoutes');
 const app = express();
 const PORT = process.env.PORT || 1008;
 
-import fetch from 'node-fetch';
-
-async function getPublicIP() {
-  try {
-    const res = await fetch("https://api.ipify.org?format=json");
-    const data = await res.json();
-    console.log("Render Public IP:", data.ip);
-  } catch (err) {
+function getPublicIP() {
+  https.get('https://api.ipify.org?format=json', (res) => {
+    let data = '';
+    res.on('data', chunk => data += chunk);
+    res.on('end', () => {
+      try {
+        const ip = JSON.parse(data).ip;
+        console.log("Render Public IP:", ip);
+      } catch (err) {
+        console.error("Failed to parse IP:", err.message);
+      }
+    });
+  }).on('error', (err) => {
     console.error("Failed to get public IP:", err.message);
-  }
+  });
 }
 
 getPublicIP();

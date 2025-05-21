@@ -9,7 +9,7 @@ const authRoutes = require('./routes/authRoutes');
 const cellRoutes = require('./routes/cellRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 1008;
+const PORT = process.env.PORT || 3306;
 
 function getPublicIP() {
   https.get('https://api.ipify.org?format=json', (res) => {

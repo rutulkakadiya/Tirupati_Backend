@@ -1,5 +1,5 @@
 // models/Cell.js
-const { DataTypes } = require('sequelize');
+const { DataTypes, INTEGER } = require('sequelize');
 const { sequelize } = require('../config/db');
 const User = require('./UserModel');
 

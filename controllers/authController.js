@@ -50,7 +50,7 @@ module.exports.register = async (req, res) => {
 
     console.error('Registration error:', error);
     return res.status(400).json({
-      msg: 'Something went wrong during registration'
+      msg: `${error}`
     });
   }
 };

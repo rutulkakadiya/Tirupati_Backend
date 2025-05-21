@@ -105,6 +105,6 @@ module.exports.getUsers = async (req, res) => {
 
   } catch (error) {
     console.error('Fetching users error:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error });
   }
 };

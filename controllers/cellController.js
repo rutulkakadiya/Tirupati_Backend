@@ -24,7 +24,7 @@ exports.getCells = async (req, res) => {
     });
   } catch (error) {
     console.error('Fetching cells error:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error });
   }
 };
 
@@ -47,6 +47,6 @@ exports.updateCell = async (req, res) => {
     res.json({ message: 'Cell updated successfully' });
   } catch (error) {
     console.error('Updating cell error:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error});
   }
 };

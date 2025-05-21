@@ -20,14 +20,14 @@ module.exports.register = async (req, res) => {
 
     // Check if user already exists
 
-    const existingUser = await UserModel.findOne({
-      where: {
-        [Op.or]: [
-          { username: { [Op.iLike]: username } },
-          { email: { [Op.iLike]: email } }
-        ]
-      }
-    });
+   const existingUser = await UserModel.findOne({
+  where: {
+    [Op.or]: [
+      { username: { [Op.like]: username } },
+      { email: { [Op.like]: email } }
+    ]
+  }});
+
     if (existingUser) {
       if (existingUser.username.toLowerCase() === username.toLowerCase()) {
         return res.status(400).json({ msg: 'Username already taken' });

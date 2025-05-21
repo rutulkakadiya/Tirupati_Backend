@@ -18,15 +18,15 @@ module.exports.register = async (req, res) => {
     }
 
     // Check if user already exists
-    // const existingUser = await UserModel.findOne({
-    //   where: {
-    //     [UserModel.sequelize.Op.or]: [{ username }, { email }]
-    //   }
-    // });
+    const existingUser = await UserModel.findOne({
+      where: {
+        [UserModel.sequelize.Op.or]: [{ username }, { email }]
+      }
+    });
 
-    // if (existingUser) {
-    //   return resError({ res, msg: 'User already exists' });
-    // }
+    if (existingUser) {
+      return resError({ res, msg: 'User already exists' });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const count = await UserModel.count();

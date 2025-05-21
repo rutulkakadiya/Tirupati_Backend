@@ -1,6 +1,7 @@
 const UserModel = require('../model/UserModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 
 module.exports.register = async (req, res) => {
   // const { username, password, email } = req.body;
@@ -18,15 +19,24 @@ module.exports.register = async (req, res) => {
     }
 
     // Check if user already exists
+
     const existingUser = await UserModel.findOne({
       where: {
-        [UserModel.sequelize.Op.or]: [{ username }, { email }]
+        [Op.or]: [
+          { username: { [Op.iLike]: username } },
+          { email: { [Op.iLike]: email } }
+        ]
       }
     });
-
     if (existingUser) {
-      return resError({ res, msg: 'User already exists' });
+      if (existingUser.username.toLowerCase() === username.toLowerCase()) {
+        return res.status(400).json({ msg: 'Username already taken' });
+      } else if (existingUser.email.toLowerCase() === email.toLowerCase()) {
+        return res.status(400).json({ msg: 'Email already registered' });
+
+      }
     }
+
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const count = await UserModel.count();

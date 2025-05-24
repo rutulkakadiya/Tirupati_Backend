@@ -32,6 +32,7 @@ getPublicIP();
 
 
 app.use(cors("https://tirupatipipes.easywayitsolutions.com"));
+// app.use(cors("http://localhost:5173"));
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(express.json()); // ✅ Needed to parse JSON bodies

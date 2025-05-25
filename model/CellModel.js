@@ -4,11 +4,11 @@ const { sequelize } = require('../config/db');
 const User = require('./UserModel');
 
 const cellData = sequelize.define('cell_data', {
-  id: {
-    type: INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
+  // id: {
+  //   type: INTEGER,
+  //   autoIncrement: true,
+  //   primaryKey: true
+  // },
   row: {
     type: DataTypes.INTEGER,
     allowNull: false,

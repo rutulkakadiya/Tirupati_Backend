@@ -11,28 +11,33 @@ const cellRoutes = require('./routes/cellRoutes');
 const app = express();
 const PORT = process.env.PORT || 3306;
 
-function getPublicIP() {
-  https.get('https://api.ipify.org?format=json', (res) => {
-    let data = '';
-    res.on('data', chunk => data += chunk);
-    res.on('end', () => {
-      try {
-        const ip = JSON.parse(data).ip;
-        console.log("Render Public IP:", ip);
-      } catch (err) {
-        console.error("Failed to parse IP:", err.message);
-      }
-    });
-  }).on('error', (err) => {
-    console.error("Failed to get public IP:", err.message);
-  });
-}
+// function getPublicIP() {
+//   https.get('https://api.ipify.org?format=json', (res) => {
+//     let data = '';
+//     res.on('data', chunk => data += chunk);
+//     res.on('end', () => {
+//       try {
+//         const ip = JSON.parse(data).ip;
+//         console.log("Render Public IP:", ip);
+//       } catch (err) {
+//         console.error("Failed to parse IP:", err.message);
+//       }
+//     });
+//   }).on('error', (err) => {
+//     console.error("Failed to get public IP:", err.message);
+//   });
+// }
 
-getPublicIP();
+// getPublicIP();
 
 
-app.use(cors("https://tirupatipipes.easywayitsolutions.com"));
-// app.use(cors("http://localhost:5173"));
+// app.use(cors("https://tirupatipipes.easywayitsolutions.com"));
+app.use(cors({ origin: [
+  'https://tirupatipipes.easywayitsolutions.com',
+  // "http://localhost:5173"
+]
+}));
+
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(express.json()); // ✅ Needed to parse JSON bodies

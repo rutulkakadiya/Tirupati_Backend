@@ -38,11 +38,6 @@ exports.updateCell = async (req, res) => {
       return res.status(403).json({ error: 'You do not have permission to update cells' });
     }
 
-    // Skip storing if value is empty, null, or undefined
-    if (value === null || value === undefined || value === '') {
-      return res.status(400).json({ message: 'Empty cell value not stored' });
-    }
-
     await cellData.upsert({
       row,
       column,
